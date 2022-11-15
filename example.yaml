@@ -1,0 +1,79 @@
+- key: string_value
+  type: string
+  name:
+    zh: string value
+  desc:
+    zh: string value
+  default: str
+
+- key: csv_value
+  type: csv
+  name:
+    zh: csv value
+  desc:
+    zh: csv value
+  default: [ a, b ]
+
+- key: int_value
+  type: int
+  name:
+    zh: int value
+  desc:
+    zh: int value
+  default: -1
+
+- key: uint_value
+  type: uint
+  name:
+    zh: uint value
+  desc:
+    zh: uint value
+  default: 1
+
+- key: float_value
+  type: float
+  name:
+    zh: float value
+  desc:
+    zh: float value
+  default: 1
+
+- key: bool_value
+  type: bool
+  name:
+    zh: bool value
+  desc:
+    zh: bool value
+  default: true
+
+- key: naddr_value
+  type: naddr
+  name:
+    zh: net addr value
+  desc:
+    zh: net addr value
+  default: 127.0.0.1:1234
+
+- key: path_value
+  type: path
+  name:
+    zh: path value
+  desc:
+    zh: path value
+  default: ./logs
+
+- key: bytes_value
+  type: bytes
+  name:
+    zh: bytes value
+  desc:
+    zh: bytes value
+  default: 10M
+
+- key: duration_value
+  type: duration
+  name:
+    zh: duration value
+  desc:
+    zh: duration value
+  default: 10s
