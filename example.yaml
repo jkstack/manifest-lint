@@ -5,6 +5,8 @@
   desc:
     zh: string value
   default: str
+  str_valid: "[a-z0-9]+"
+  len: 10
 
 - key: csv_value
   type: csv
@@ -13,6 +15,8 @@
   desc:
     zh: csv value
   default: [ a, b ]
+  csv_valid: [ a, b ]
+  len: 2
 
 - key: int_value
   type: int
@@ -21,6 +25,8 @@
   desc:
     zh: int value
   default: -1
+  min: -100
+  max: 100
 
 - key: uint_value
   type: uint
@@ -29,6 +35,8 @@
   desc:
     zh: uint value
   default: 1
+  min: 0
+  max: 100
 
 - key: float_value
   type: float
@@ -37,6 +45,8 @@
   desc:
     zh: float value
   default: 1
+  min: 0
+  max: 100
 
 - key: bool_value
   type: bool
@@ -61,6 +71,8 @@
   desc:
     zh: path value
   default: ./logs
+  allow_relative: true
+  len: 255
 
 - key: bytes_value
   type: bytes
@@ -69,6 +81,12 @@
   desc:
     zh: bytes value
   default: 10M
+  min: 1M
+  max: 100M
+  enabled:
+    when:
+      target: csv_value
+      contain: a
 
 - key: duration_value
   type: duration
@@ -77,3 +95,9 @@
   desc:
     zh: duration value
   default: 10s
+  min: 1s
+  max: 1h
+  enabled:
+    when:
+      target: bool_value
+      equal: true
