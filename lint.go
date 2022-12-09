@@ -70,6 +70,7 @@ type item struct {
 		Zh string `yaml:"zh"`
 	} `yaml:"desc"`
 	Type          itemType    `yaml:"type"`
+	Required      bool        `yaml:"required"`
 	Default       interface{} `yaml:"default"`
 	CsvValid      []string    `yaml:"csv_valid"`
 	StrValid      string      `yaml:"str_valid"`
