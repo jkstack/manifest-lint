@@ -27,6 +27,7 @@ const (
 	typePath     itemType = "path"
 	typeBytes    itemType = "bytes"
 	typeDuration itemType = "duration"
+	typeUUID     itemType = "uuid"
 )
 
 func (t *itemType) UnmarshalYAML(value *yaml.Node) error {
@@ -51,6 +52,8 @@ func (t *itemType) UnmarshalYAML(value *yaml.Node) error {
 		*t = typeBytes
 	case string(typeDuration):
 		*t = typeDuration
+	case string(typeUUID):
+		*t = typeUUID
 	default:
 		return fmt.Errorf("unsupported type: %s", value.Value)
 	}
