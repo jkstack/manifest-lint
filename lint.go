@@ -18,6 +18,7 @@ type itemType string
 
 const (
 	typeString   itemType = "string"
+	typeEnum     itemType = "enum"
 	typeCsv      itemType = "csv"
 	typeInt      itemType = "int"
 	typeUint     itemType = "uint"
@@ -34,6 +35,8 @@ func (t *itemType) UnmarshalYAML(value *yaml.Node) error {
 	switch value.Value {
 	case string(typeString):
 		*t = typeString
+	case string(typeEnum):
+		*t = typeEnum
 	case string(typeCsv):
 		*t = typeCsv
 	case string(typeInt):
@@ -75,6 +78,7 @@ type item struct {
 	Type          itemType    `yaml:"type"`
 	Required      bool        `yaml:"required"`
 	Default       interface{} `yaml:"default"`
+	EnumValid     []string    `yaml:"enum_valid"`
 	CsvValid      []string    `yaml:"csv_valid"`
 	StrValid      string      `yaml:"str_valid"`
 	Min           interface{} `yaml:"min"`
@@ -99,6 +103,7 @@ func main() {
 	utils.Assert(decode(os.Args[1], &items))
 	requiredLint(items)
 	defaultValueLint(items)
+	enumLint(items)
 	csvLint(items)
 	strLint(items)
 	minMaxValueLint(items)
@@ -152,6 +157,10 @@ func defaultValueLint(items []item) {
 			if _, ok := item.Default.(string); !ok {
 				onPanic()
 			}
+		case typeEnum:
+			if _, ok := item.Default.(string); !ok {
+				onPanic()
+			}
 		case typeCsv:
 			if _, ok := item.Default.([]interface{}); !ok {
 				onPanic()
@@ -190,6 +199,32 @@ func defaultValueLint(items []item) {
 			}
 			_, err := time.ParseDuration(item.Default.(string))
 			onPanic(err)
+		}
+	}
+}
+
+func enumLint(items []item) {
+	log.Println("check enum lint...")
+	for _, item := range items {
+		if item.Type != typeEnum {
+			continue
+		}
+		if item.EnumValid == nil {
+			panic(fmt.Sprintf("missing enum_valid value for item %s", item.Key))
+		}
+		if item.Default == nil {
+			continue
+		}
+		found := false
+		for _, enum := range item.EnumValid {
+			if enum == item.Default.(string) {
+				found = true
+				break
+			}
+		}
+		if !found {
+			panic(fmt.Sprintf("unsupported default value for item %s: value %v valid %v",
+				item.Key, item.Default, item.EnumValid))
 		}
 	}
 }

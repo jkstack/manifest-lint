@@ -8,6 +8,15 @@
   str_valid: "[a-z0-9]+"
   len: 10
 
+- key: enum_value
+  type: enum
+  name:
+    zh: enum value
+  desc:
+    zh: enum value
+  default: a
+  enum_valid: [ a, b ]
+
 - key: csv_value
   type: csv
   name:
